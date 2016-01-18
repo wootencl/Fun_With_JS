@@ -12,7 +12,7 @@ SinglyLinkedList.prototype = {
 		},
 		// used to travarse the structure
 		current;
-		
+
 		//special case: no items in the list yet
 		if (this._head === null) {
 			this._head = node;
@@ -31,7 +31,7 @@ SinglyLinkedList.prototype = {
 		if (index > -1 && index < this._length) {
 			var current = this._head,
 			i = 0;
-			
+
 			while (i < index) {
 				current = current.next;
 				i++;
@@ -47,7 +47,7 @@ SinglyLinkedList.prototype = {
 			var current = this._head,
 			previous,
 			i = 0;
-			
+
 			//special case: remove first item
 			if (index === 0) {
 				this._head = current.next;
@@ -58,14 +58,35 @@ SinglyLinkedList.prototype = {
 					current = current.next;
 					i++;
 				}
-				
+
 				//skip over the item to remove
-				previous.next = current.next
+				previous.next = current.next;
 			}
 			this._length--;
 		} else {
 			return null;
 		}
+	},
+	removeData: function(data) {
+		var current = this._head;
+		//special case for head
+		if (current.data === data) {
+			this._head = current.next;
+			this._length--;
+			return;
+		}
+		previous = current;
+		current = current.next;
+		while (current !== null) {
+			if (current.data === data) {
+				previous.next = current.next;
+				this._length--;
+				return;
+			}
+			previous = current;
+			current = current.next;
+		}
+		return false;
 	}
 }
 var list = new SinglyLinkedList();
@@ -73,5 +94,6 @@ list.add("red");
 list.add("orange");
 list.add("yellow");
 console.log(list.item(1));
-list.remove(1);
+//list.remove(2);
+list.removeData("orange");
 console.log(list.item(1));

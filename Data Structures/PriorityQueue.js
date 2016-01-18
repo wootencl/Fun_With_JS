@@ -1,32 +1,55 @@
+// Primary Queue
+// Built this using the heap implemented in heapsort
+
+
 function PriorityQueue() {
 	this._elements = [];
 }
 PriorityQueue.prototype = {
-	_compare: function (a,b) {
-		if (typeof a === 'number' && typeof b === 'number') {
-			return a-b;
+	_bubble_up: function(i) {
+		var left = i * 2 + 1;
+		var right = i * 2 + 2;
+		var largest = i;
+		var heapSize = this._elements.length;
+		
+		if (left < heapSize && this._compare(this._elements[left], this._elements[largest]) > 0) {
+			largest = left;
+		}
+		if (right < heapSize && this._compare(this._elements[right], this._elements[largest]) > 0) {
+			largest = right;
+		}
+		if (largest !== i) {
+			this._swap(this._elements, i, largest);
+			this._bubble_up(largest);
+		}
+	},
+	_compare: function(a,b) {
+		if (a === b) {
+			return 0;
 		} else {
-			a = a.toString();
-			b = b.toString();
-			if (a == b) {
-				return 0;
-			}
 			return (a > b) ? 1 : -1;
 		}
 	},
-	isEmpty: function () {
-		return this.size() === 0;
+	_swap: function(array, firstIndex, secondIndex) {
+		var temp = array[firstIndex];
+		array[firstIndex] = array[secondIndex];
+		array[secondIndex] = temp;
 	},
-	//used in the removal
-	peek: function () {
-		if (this.isEmpty()) throw new Error('PriorityQueue is empty');
+	enqueue: function(num) {
+		this._elements.unshift(num);
+		this._bubble_up(0);
 	},
-	enqueu: function(element){
-		var size = this._elements.push(element);
-		var current = size-1;
-		
-		while (current>0) {
-			var parent 
-		}
+	dequeue: function () {
+		var ret = this._elements.shift();
+		this._bubble_up(0);
+		return ret;
 	}
 }
+
+var pq = new PriorityQueue();
+pq.enqueue(1);
+pq.enqueue(7);
+pq.enqueue(6);
+pq.enqueue(3);
+pq.enqueue(2);
+console.log(pq.dequeue());
