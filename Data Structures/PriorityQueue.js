@@ -6,12 +6,12 @@ function PriorityQueue() {
 	this._elements = [];
 }
 PriorityQueue.prototype = {
-	_bubble_up: function(i) {
+	_heapify: function(i) {
 		var left = i * 2 + 1;
 		var right = i * 2 + 2;
 		var largest = i;
 		var heapSize = this._elements.length;
-		
+
 		if (left < heapSize && this._compare(this._elements[left], this._elements[largest]) > 0) {
 			largest = left;
 		}
@@ -20,7 +20,7 @@ PriorityQueue.prototype = {
 		}
 		if (largest !== i) {
 			this._swap(this._elements, i, largest);
-			this._bubble_up(largest);
+			this._heapify(largest);
 		}
 	},
 	_compare: function(a,b) {
@@ -37,11 +37,11 @@ PriorityQueue.prototype = {
 	},
 	enqueue: function(num) {
 		this._elements.unshift(num);
-		this._bubble_up(0);
+		this._heapify(0);
 	},
 	dequeue: function () {
 		var ret = this._elements.shift();
-		this._bubble_up(0);
+		this._heapify(0);
 		return ret;
 	}
 }

@@ -1,3 +1,11 @@
+//Singly Linked List
+// Space/Time Complexities:
+// Average:
+//	Access: O(n) | Search: O(n) | Insertion: O(1) | Deletion: O(1)
+// Worst:
+//	Access: O(n) | Search: O(n) | Insertion: O(1) | Deletion: O(1)
+// Space (Worst): O(n)
+
 function SinglyLinkedList() {
 	this._length = 0;
 	this._head = null;
@@ -85,6 +93,19 @@ SinglyLinkedList.prototype = {
 			}
 			previous = current;
 			current = current.next;
+		}
+		return false;
+	},
+	detectLoop: function() {
+		var sP = this._head;
+		var fP = this._head;
+		while (sp && fP && fP.next) {
+			sp = sP.next;
+			fp = fP.next.next;
+
+			if (sP == fP) {
+				return true;
+			}
 		}
 		return false;
 	}

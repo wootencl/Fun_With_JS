@@ -1,6 +1,8 @@
-// Heap Sort - Complexity: O(nlog(n)) 
+// Heap Sort - Complexity: O(nlog(n))
 // Source: http://www.growingwiththeweb.com/2012/11/algorithm-heapsort.html
-// I know I mispelled the file name. I'm leaving it
+// Complexity:
+// 	Best: O(nlog(n)) | Average: O(nlog(n)) | Worst: O(nlog(n))
+// Space (Worst): O(1)
 
 function swap(array, firstIndex, secondIndex) {
 	var temp = array[firstIndex];
@@ -30,7 +32,7 @@ function heapify(array, heapSize, i, compare, swap) {
 	var left = i * 2 + 1;
 	var right = i * 2 + 2;
 	var largest = i;
-	
+
 	if (left < heapSize && compare(array[left], array[largest]) > 0) {
 		largest = left;
 	}
@@ -66,7 +68,7 @@ function heapSort(array, compare, swap) {
 
 var a = [2,5,1,6,7,8,3,0];
 console.log(a);
-buildHeap(a, a.length, compareMax, swap);
+buildHeap(a, a.length, compareMin, swap);
 console.log(a);
-a.shift();
-heapify(a, a.length, 0, compareMax, swap);
+heapSort(a, compareMin, swap);
+console.log(a);

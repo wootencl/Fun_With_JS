@@ -1,7 +1,14 @@
 // This implmentation of a BST is taken from the below website:
 // https://www.nczonline.net/blog/2009/06/16/computer-science-in-javascript-binary-search-tree-part-1/
 // https://www.nczonline.net/blog/2009/06/16/computer-science-in-javascript-binary-search-tree-part-2/
-// BinarySearch 
+// BinarySearch
+// Space/Time Complexities:
+// Average:
+//	Access: O(log(n)) | Search: O(log(n)) | Insertion: O(log(n)) | Deletion: O(log(n))
+// Worst:
+//	Access: O(n) | Search: O(n) | Insertion: O(n) | Deletion: O(n)
+// Space (Worst): O(n)
+
 function BinarySearchTree() {
 	this._root = null;
 }
@@ -12,7 +19,7 @@ BinarySearchTree.prototype = {
 	contains: function (value) {
 		var found = false,
 		current = this._root;
-		
+
 		while (!found && current) {
 			if (value < current.value) {
 				current = current.left;
@@ -33,7 +40,7 @@ BinarySearchTree.prototype = {
 		},
 		current;
 		if (this._root === null) {
-			this._root = node;	
+			this._root = node;
 		} else {
 			current = this._root;
 			while (true) {
@@ -79,7 +86,7 @@ BinarySearchTree.prototype = {
 	},
 	size: function () {
 		var length = 0;
-		
+
 		this.traverse(function(node){
 			length++;
 		});
@@ -87,7 +94,7 @@ BinarySearchTree.prototype = {
 	},
 	toArray: function () {
 		var result = [];
-		
+
 		this.traverse(function(node){
 			result.push(node.value);
 		});
@@ -137,7 +144,7 @@ BinarySearchTree.prototype = {
 		childCount,
 		replacement,
 		replacementParent;
-		
+
 		//find node
 		while (!found && current) {
 			if (value < current.value) {
@@ -154,7 +161,7 @@ BinarySearchTree.prototype = {
 		if (found) {
 			//figure out how many children there are
 			childCount = (current.left !== null ? 1 : 0) + (current.right !== null ? 1 : 0);
-			
+
 			//special case for root
 			if (current === this._root) {
 				switch(childCount) {
@@ -166,22 +173,22 @@ BinarySearchTree.prototype = {
 						break;
 					case 2:
 						replacement = this._root.left;
-						
+
 						//find the right-most leaf node of the old root's left node
 						while (replacement.right !== null) {
 							replacementParent = replacement;
 							replacement = replacement.right;
 						}
-						
+
 						if (replacementParent !== null) {
 							replacementParent.right = replacement.left;
-							
+
 							replacement.right = this._root.right;
 							replacement.left = this._root.left;
 						} else {
 							replacement.right = this._root.right;
 						}
-						
+
 						this._root = replacement;
 				}
 			} else { //non root values
@@ -203,17 +210,17 @@ BinarySearchTree.prototype = {
 					case 2:
 						replacement = current.left;
 						replacementParent = current;
-						
+
 						while (replacement.right !== null) {
 							replacementParent = replacement;
 							replacement = replacement.right;
 						}
-						
+
 						replacementParent.right = replacement.left;
-						
+
 						replacement.right = current.right;
 						replacment.left = current.left;
-						
+
 						if (current.value < parent.value) {
 							parent.left = replacement;
 						} else {
@@ -221,9 +228,22 @@ BinarySearchTree.prototype = {
 						}
 				}
 			}
-		} 
+		}
+	},
+	//nearestAncestor -> function to find the nearest ancestor of two nodes in a binary tree
+	//two parameters are the two nodes. Returns false if one or both of the nodes do not exist in the tree
+	nearestAncestor: function (node, n1, n2) {
+		if (!this.contains(n1) || !this.contains(n2)) {
+			return false;
+		}
+		if (node.value > n1 && node.value > n2) {
+			return this.nearestAncestor(node.left, n1, n2);
+		}
+		if (node.value < n1 && node.value < n2) {
+			return this.nearestAncestor(node.right, n1, n2);
+		}
+		return node.value;
 	}
-	
 }
 
 var array = [7,1,9,0,3,2,5,4,6,8,10];
@@ -231,5 +251,15 @@ var bst = new BinarySearchTree();
 for (var i = 0; i<array.length; i++) {
 	bst.add(array[i]);
 }
-bst.remove(4);
-console.log(bst.toArray());
+//bst.remove(4);
+console.log(bst.nearestAncestor(bst._root, 44, 6));
+
+//Not unique to binary trees but here's a function to check if two trees are equal
+function identicalTrees(a, b) {
+	if (a === null && b === null) {
+		if (a !== null && b !== null) {
+			return (a.value === b.value) && identicalTrees(a.left, b.left) && (a.right, b.right);
+		}
+	}
+	return false;
+}

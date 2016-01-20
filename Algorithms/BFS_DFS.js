@@ -1,9 +1,9 @@
 // This implementation of a graph was taken from Michael Micmillan's Book
 // 'Data Structures and Algorithms in Javascript'. I originally attempted converting
 // one written in C in my DS&A study book (The Algorithm Design Manual - Steven Skiena)
-// but thought this solution was a little more elegant and simple to understand. 
+// but thought this solution was a little more elegant and simple to understand.
 
-// Representation of our graph as an adjaceny list where the index represents the 
+// Representation of our graph as an adjaceny list where the index represents the
 // vertex and the subarray at each index represents that vertex's coressponding adjacent vertices.
 
 var graph1 = [[4],[2,5],[1,3],[2,4,5],[0,3],[1,3]];
@@ -23,6 +23,7 @@ function showGraph(graph) {
 }
 
 //BFS - Returns an object with marked and edgeTo arrays
+//Time Complexity: O(Vertices+Edges)
 function bfs(graph, start) {
 	var queue = [];
 	var marked = [];
@@ -48,28 +49,6 @@ function bfs(graph, start) {
 	return { marked: marked, edgeTo: edgeTo }
 }
 
-//DFS
-function dfs(graph, start) {
-	var marked = [];
-	//initialize marked
-	for (var i=0; i < graph.length ; i++) {
-		marked[i] = false;
-	}
-	function dfsRec(vertex) {
-		marked[vertex] = true;
-		console.log('Visited vertex: ' + vertex);
-		for (var i = 0; i < graph[vertex].length ; i++) {
-			if (!marked[graph[vertex][i]]) {
-				dfsRec(graph[vertex][i]);
-			}
-		}
-	}
-	return dfsRec(start);
-}
-
-showGraph(graph2);
-dfs(graph2, 0);
-
 function pathTo(graph, source, vertex) {
 	var obj = bfs(graph, source);
 	var retStr = '';
@@ -93,7 +72,72 @@ function pathTo(graph, source, vertex) {
 	console.log(retStr);
 }
 
-
 //showGraph(graph2);
 //pathTo(graph2, 0, 4);
 
+//DFS
+//Time Complexity: O(Vertices+Edges)
+function dfs(graph, start) {
+	var marked = [];
+	//initialize marked
+	for (var i=0; i < graph.length ; i++) {
+		marked[i] = false;
+	}
+	function dfsRec(vertex) {
+		marked[vertex] = true;
+		console.log('Visited vertex: ' + vertex);
+		for (var i = 0; i < graph[vertex].length ; i++) {
+			if (!marked[graph[vertex][i]]) {
+				dfsRec(graph[vertex][i]);
+			}
+		}
+	}
+	return dfsRec(start);
+}
+
+//showGraph(graph2);
+//dfs(graph2, 0);
+
+//Topological Sort
+// Source: http://www.geeksforgeeks.org/topological-sorting/
+//Time Complexity: O(Vertices+Edges)
+
+graph3 = [[],[],[3],[1],[0,1],[0,2]];
+
+function tpSU(graph, vertex, marked, stack) {
+	//mark the current node as marked
+	marked[vertex] = true;
+	for (var i = 0; i < graph[vertex].length ; i++) {
+		if (!marked[graph[vertex][i]]) {
+			tpSU(graph, graph[vertex][i], marked, stack);
+		}
+	}
+	stack.push(vertex);
+}
+
+function tpS(graph) {
+	var stack = [];
+	var marked = [];
+	var retS = '';
+	for (var i=0; i < graph.length ; i++) {
+		marked[i] = false;
+	}
+	for (var j = 0; j < graph.length ; j++) {
+		if (!marked[j]) {
+			tpSU(graph, j, marked, stack);
+		}
+	}
+	while (stack.length > 0) {
+		if (stack.length > 1) {
+			retS += stack.pop() + "-";
+		} else {
+			retS += stack.pop();
+		}
+	}
+	return retS;
+}
+
+//var a = tpS(graph3);
+//console.log(a);
+
+pathTo(graph3, 5, 4);

@@ -1,3 +1,11 @@
+// Hash table I created. Took the hash function from java
+// Space/Time Complexities:
+// Average:
+//	Access: - | Search: O(1) | Insertion: O(1) | Deletion: O(1)
+// Worst:
+//	Access: - | Search: O(n) | Insertion: O(n) | Deletion: O(n)
+// Space (Worst): O(n)
+
 function hashTable() {
 	this._items = {};
 }
@@ -73,6 +81,7 @@ hashTable.prototype = {
 							precedingNode.next = current.next;
 							bool = true;
 						} else {
+							//tail node
 							current = null;
 							bool = true;
 						}

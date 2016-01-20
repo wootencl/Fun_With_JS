@@ -1,4 +1,6 @@
-// Complexity: O(nlog(n))
+// Complexity:
+// 	Best: O(nlog(n)) | Worst: O(n^2)
+// Space (Worst): O(log(n))
 function medianOfThree(items, left, right) {
 	var mid = Math.floor((left+right)/2);
 	if (items[right] < items[left]) {

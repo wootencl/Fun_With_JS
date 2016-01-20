@@ -1,4 +1,4 @@
-//stack is already built into javascript. It is LIFO 
+//stack is already built into javascript. It is LIFO
 
 var stack = [];
 
@@ -11,7 +11,7 @@ console.log(stack.pop());
 console.log(stack.pop());
 
 
-//queue is also essentially built in. You just use 'shift()' and your dequeue. It is FIFO
+//queue is also essentially built in. You just use 'shift()' as your dequeue. It is FIFO
 
 var queue = [];
 
