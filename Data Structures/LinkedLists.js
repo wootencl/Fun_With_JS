@@ -108,6 +108,23 @@ SinglyLinkedList.prototype = {
 			}
 		}
 		return false;
+	},
+	reverseList: function(){
+		var head = this._head,
+		current = head,
+		arr = [];
+
+		while (current !== null) {
+			arr.push(current);
+			current = current.next;
+		}
+		current = arr.pop();
+		head = current;
+		while(arr.length > 0) {
+			current.next = arr.pop();
+			current = current.next;
+		}
+		current.next = null;
 	}
 }
 var list = new SinglyLinkedList();

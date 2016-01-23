@@ -254,12 +254,14 @@ for (var i = 0; i<array.length; i++) {
 //bst.remove(4);
 console.log(bst.nearestAncestor(bst._root, 44, 6));
 
-//Not unique to binary trees but here's a function to check if two trees are equal
+//Not unique to binary search trees but here's a function to check if two trees are equal
+//O(m) m=nodes && m<n
 function identicalTrees(a, b) {
 	if (a === null && b === null) {
-		if (a !== null && b !== null) {
+		return 1;
+	}
+	if (a !== null && b !== null) {
 			return (a.value === b.value) && identicalTrees(a.left, b.left) && (a.right, b.right);
 		}
-	}
-	return false;
+	return 0;
 }

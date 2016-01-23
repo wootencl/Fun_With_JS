@@ -6,6 +6,13 @@
 // Representation of our graph as an adjaceny list where the index represents the
 // vertex and the subarray at each index represents that vertex's coressponding adjacent vertices.
 
+
+//A couple other notes on graphs:
+// Djikstra's Algorithm: Used to find the shortest path in weighted graphs
+//	- A*  is a faster implementation
+// Bellman Ford: Used to find the shortest path in weighted graphs with negative weights
+// Floyd-Warshall: Gives you the shortest distance to travel from any source node to any other node
+
 var graph1 = [[4],[2,5],[1,3],[2,4,5],[0,3],[1,3]];
 var graph2 = [[1,2],[0,3],[0,4],[1],[2]];
 
@@ -102,7 +109,7 @@ function dfs(graph, start) {
 // Source: http://www.geeksforgeeks.org/topological-sorting/
 //Time Complexity: O(Vertices+Edges)
 
-graph3 = [[],[],[3],[1],[0,1],[0,2]];
+var graph3 = [[],[],[3],[1],[0,1],[0,2]];
 
 function tpSU(graph, vertex, marked, stack) {
 	//mark the current node as marked
@@ -137,7 +144,33 @@ function tpS(graph) {
 	return retS;
 }
 
-//var a = tpS(graph3);
-//console.log(a);
+//var a = tpS(graph3);//console.log(a);
+//pathTo(graph3, 5, 4);
 
-pathTo(graph3, 5, 4);
+var graph4 = [[{node:1 , weight:5 }, {node:2 , weight:3 }], [{node:2 , weight:2 }, {node:3 , weight:6 }],[{node:3 , weight:7 },{node:4 , weight:4 },{node:5 , weight:2 }],[{node:4 , weight:-1 },{node:5 , weight:1 }],[{node:5 , weight:-2 }],[]];
+
+function longestPath(graph, source) {
+	var stack = [],
+	marked = [],
+	distance = [];
+
+	for (var i=0; i < graph.length ; i++) {
+		marked[i] = false;
+		distance[i] = Infinity;
+	}
+	distance[source] = 0;
+	for (var j = 0 ; j < graph.length ; j++) {
+		if (marked[j] === false) {
+			tpSU(graph, j, visited, stack);
+		}
+	}
+	while (stack.length > 0) {
+		var v = stack.pop();
+
+		if (dist[v] !== Infinity) {
+			for (var k = graph[v][0] ; k < graph[v].length ; k) {
+
+			}
+		}
+	}
+}

@@ -1,5 +1,6 @@
 // Binary Search
 // Complexity: O(log(n))
+//		How many time can you divide N/2 to get 1 element
 // 		Complexity Explanation: 1 = N/(2^x) -> 2^x = N -> log(base2)(2^x) = log(base2)(N) -> x = log(base2)(N)
 // Source: https://www.nczonline.net/blog/2009/09/01/computer-science-in-javascript-binary-search/
 function binarySearch(items, value) {
